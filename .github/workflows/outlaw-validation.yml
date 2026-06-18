@@ -1,10 +1,1 @@
-name: Outlaw validation
-
-on:
-  workflow_dispatch:
-
-jobs:
-  note:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Use the repository Build workflow."
+# Redundant with .github/workflows/build.yml in the base repository.
