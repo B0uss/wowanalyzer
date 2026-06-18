@@ -40,8 +40,7 @@
   "include": ["types/**/*", "src/**/*"],
   "exclude": [
     "src/analysis/retail/druid/restoration",
-    "src/analysis/retail/paladin/protection",
-    "src/analysis/retail/rogue/outlaw"
+    "src/analysis/retail/paladin/protection"
   ],
   "files": [
     "src/analysis/retail/druid/restoration/CONFIG.tsx",
