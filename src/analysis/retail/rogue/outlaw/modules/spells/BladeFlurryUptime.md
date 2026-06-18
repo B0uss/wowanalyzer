@@ -1,1 +1,0 @@
-This statistic currently measures Blade Flurry uptime over the full encounter. Effective multi-target uptime can be added separately once target-availability windows are modeled.
