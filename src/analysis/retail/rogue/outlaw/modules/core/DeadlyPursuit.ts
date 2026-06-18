@@ -6,6 +6,9 @@ import RestlessBlades from './RestlessBlades';
 const SPELL = { id: 1259614, name: 'Deadly Pursuit', icon: 'ability_rogue_murderspree' };
 const MULTIPLIER = 3;
 
+export const calculateDeadlyPursuitCooldownReduction = (durationMs: number) =>
+  Math.max(0, durationMs) * MULTIPLIER;
+
 class DeadlyPursuit extends Analyzer {
   static dependencies = { restlessBlades: RestlessBlades };
   protected restlessBlades!: RestlessBlades;
@@ -25,8 +28,11 @@ class DeadlyPursuit extends Analyzer {
     if (this.appliedAt === null) {
       return;
     }
-    const durationMs = Math.max(0, event.timestamp - this.appliedAt);
-    this.restlessBlades.reduceAffectedCooldowns(durationMs * MULTIPLIER);
+
+    const durationMs = event.timestamp - this.appliedAt;
+    this.restlessBlades.reduceAffectedCooldowns(
+      calculateDeadlyPursuitCooldownReduction(durationMs),
+    );
     this.appliedAt = null;
   }
 }
