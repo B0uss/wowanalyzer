@@ -1,0 +1,1 @@
+Initial implementation intentionally reports full-fight uptime. Multi-target opportunity windows require separate target-state analysis.
