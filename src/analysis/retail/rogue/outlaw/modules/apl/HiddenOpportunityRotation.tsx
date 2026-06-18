@@ -43,9 +43,7 @@ const hasHONoStealthLowCPFinisherCondition = () => {
   );
 };
 
-const rtbCondition = () => {
-  return buffsCount(ROLL_THE_BONES_BUFFS, 5, 'lessThan');
-};
+const rtbCondition = () => buffsCount(ROLL_THE_BONES_BUFFS, 1, 'lessThan');
 
 const COOLDOWNS: Rule[] = [
   {
@@ -101,7 +99,6 @@ const BUILDERS: Rule[] = [
   {
     spell: SPELLS.AMBUSH,
     condition: or(
-      // we add a 100ms offset to prevent pistol shots proccing audacity from being flagged incorrectly
       buffPresent(SPELLS.AUDACITY_TALENT_BUFF, 100),
       describe(
         or(
