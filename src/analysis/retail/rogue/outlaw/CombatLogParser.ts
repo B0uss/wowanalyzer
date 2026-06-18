@@ -15,6 +15,7 @@ import ComboPointGraph from 'analysis/retail/rogue/shared/ComboPointGraph';
 import Abilities from './modules/Abilities';
 import Buffs from './modules/Buffs';
 import ComboPoints from './modules/core/ComboPoints';
+import DeadlyPursuit from './modules/core/DeadlyPursuit';
 import Energy from './modules/core/Energy';
 import OutlawComboPointTracker from './modules/core/OutlawComboPointTracker';
 import OutlawEnergyCapTracker from './modules/core/OutlawEnergyCapTracker';
@@ -75,6 +76,7 @@ class CombatLogParser extends CoreCombatLogParser {
     // Core
     builderUse: BuilderUse,
     finisherUse: FinisherUse,
+    deadlyPursuit: DeadlyPursuit,
 
     //Core
     restlessBlades: RestlessBlades,
