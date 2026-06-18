@@ -1,1 +1,0 @@
-Future refinement: calculate effective uptime only while two or more valid targets are available.
