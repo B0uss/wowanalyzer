@@ -5,9 +5,21 @@ import Analyzer from 'parser/core/Analyzer';
 import Statistic from 'parser/ui/Statistic';
 import STATISTIC_ORDER from 'parser/ui/STATISTIC_ORDER';
 
+export function calculateBladeFlurryUptime(uptimeMs: number, durationMs: number): number {
+  if (durationMs <= 0) {
+    return 0;
+  }
+
+  const ratio = uptimeMs / durationMs;
+  return Math.max(0, Math.min(1, ratio));
+}
+
 class BladeFlurryUptime extends Analyzer {
   get percentUptime(): number {
-    return this.selectedCombatant.getBuffUptime(SPELLS.BLADE_FLURRY.id) / this.owner.fightDuration;
+    return calculateBladeFlurryUptime(
+      this.selectedCombatant.getBuffUptime(SPELLS.BLADE_FLURRY.id),
+      this.owner.fightDuration,
+    );
   }
 
   statistic() {
