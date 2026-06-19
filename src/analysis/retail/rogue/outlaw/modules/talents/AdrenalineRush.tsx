@@ -12,7 +12,11 @@ import ComboPointTracker from 'analysis/retail/rogue/shared/ComboPointTracker';
 import { getGeneratedAdrenalineRushComboPoints } from '../../normalizers/CastLinkNormalizer';
 import uptimeBarSubStatistic, { UptimeBarSpec } from 'parser/ui/UptimeBarSubStatistic';
 
-const MAX_GOOD_CP = 2;
+export const MAX_GOOD_ADRENALINE_RUSH_COMBO_POINTS = 2;
+
+export function isAdrenalineRushComboPointUsageGood(comboPoints: number): boolean {
+  return comboPoints <= MAX_GOOD_ADRENALINE_RUSH_COMBO_POINTS;
+}
 
 export default class AdrenalineRush extends Analyzer {
   static dependencies = {
@@ -29,7 +33,6 @@ export default class AdrenalineRush extends Analyzer {
   constructor(options: Options) {
     super(options);
 
-    // Currently you just want to avoid overcapping, and that can only happen if you have Improved Adrenaline Rush
     this.active =
       this.selectedCombatant.hasTalent(TALENTS.ADRENALINE_RUSH_TALENT) &&
       this.hasImprovedAdrenalineRush;
@@ -51,7 +54,8 @@ export default class AdrenalineRush extends Analyzer {
         </p>
         <p>
           When playing with <SpellLink spell={TALENTS.IMPROVED_ADRENALINE_RUSH_TALENT} /> you should
-          use it at <strong>{MAX_GOOD_CP} or less</strong> Combo Points to avoid overcapping.
+          use it at <strong>{MAX_GOOD_ADRENALINE_RUSH_COMBO_POINTS} or less</strong> Combo Points to
+          avoid overcapping.
         </p>
       </>
     );
@@ -108,7 +112,7 @@ export default class AdrenalineRush extends Analyzer {
     event: CastEvent,
     comboPointsAtCast: number,
   ): ChecklistUsageInfo | undefined {
-    const isGoodCP = comboPointsAtCast <= MAX_GOOD_CP;
+    const isGoodCP = isAdrenalineRushComboPointUsageGood(comboPointsAtCast);
 
     return createChecklistItem(
       'adrenaline_rush_cp',
@@ -125,7 +129,8 @@ export default class AdrenalineRush extends Analyzer {
           <div>
             You used <SpellLink spell={TALENTS.ADRENALINE_RUSH_TALENT} /> at{' '}
             <strong>{comboPointsAtCast}</strong> combo points. Try to use it at{' '}
-            <strong>{MAX_GOOD_CP} or less</strong> CP to avoid overcapping.
+            <strong>{MAX_GOOD_ADRENALINE_RUSH_COMBO_POINTS} or less</strong> CP to avoid
+            overcapping.
           </div>
         ),
       },
