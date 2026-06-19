@@ -137,15 +137,6 @@ function ActionPriorityList({ modules, info }: GuideProps<typeof CombatLogParser
         .
       </p>
       <AplSectionData checker={AplCheck.check} apl={AplCheck.apl(info)} />
-      <hr />
-      <p>
-        <strong>Disclaimer:</strong> Currently unsupported talent:
-        <ul>
-          <li>
-            <SpellLink spell={TALENTS.THISTLE_TEA_TALENT} />
-          </li>
-        </ul>
-      </p>
       <p>You can use the accuracy here as a reference point to compare to other logs.</p>
     </Section>
   );
