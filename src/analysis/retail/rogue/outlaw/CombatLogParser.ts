@@ -43,19 +43,25 @@ import FinisherUse from './modules/core/FinisherUse';
 import AplCheck from './modules/apl/AplCheck';
 import CastLinkNormalizer from './normalizers/CastLinkNormalizer';
 import OpportunityRefreshNormalizer from './normalizers/OpportunityRefreshNormalizer';
+
 import SpellUsable from './modules/features/SpellUsable';
 import AdrenalineRush from './modules/talents/AdrenalineRush';
 
 class CombatLogParser extends CoreCombatLogParser {
   static specModules = {
+    //Feature
     abilities: Abilities,
     alwaysBeCasting: AlwaysBeCasting,
     buffs: Buffs,
     spellUsable: SpellUsable,
+
+    //Normalizers
     castLinkNormalizer: CastLinkNormalizer,
     thistleTeaCastLinkNormalizer: ThistleTeaCastLinkNormalizer,
     fanTheHammerNormalizer: FanTheHammerNormalizer,
     opportunityRefreshNormalizer: OpportunityRefreshNormalizer,
+
+    //Resource
     comboPointTracker: OutlawComboPointTracker,
     comboPointDetails: ComboPointDetails,
     comboPoints: ComboPoints,
@@ -66,11 +72,17 @@ class CombatLogParser extends CoreCombatLogParser {
     energy: Energy,
     energyGraph: EnergyGraph,
     spellEnergyCost: SpellEnergyCost,
+
+    // Core
     builderUse: BuilderUse,
     finisherUse: FinisherUse,
+
+    //Core
     restlessBlades: RestlessBlades,
     rollTheBonesCastTracker: RollTheBonesCastTracker,
     instantPoison: InstantPoison,
+
+    //Casts
     dispatch: Dispatch,
     opportunityDamageTracker: OpportunityDamageTracker,
     opportunity: Opportunity,
@@ -84,10 +96,13 @@ class CombatLogParser extends CoreCombatLogParser {
     rollTheBonesEfficiency: RollTheBonesEfficiency,
     finishers: Finishers,
     sliceAndDiceUptime: SliceAndDiceUptime,
+    //Talents
     bladeRush: BladeRush,
     echoingReprimand: EchoingReprimand,
     adrenalineRush: AdrenalineRush,
     preparation: Preparation,
+
+    // Outlaw's throughput benefit isn't as big as for other classes since we don't have a lot of free gcds to use
     arcaneTorrent: [
       ArcaneTorrent,
       {
@@ -96,6 +111,7 @@ class CombatLogParser extends CoreCombatLogParser {
         extraSuggestion: 'You should be using Arcane Torrent whenever you have a free GCD for it.',
       },
     ] as const,
+
     apl: AplCheck,
   };
 
