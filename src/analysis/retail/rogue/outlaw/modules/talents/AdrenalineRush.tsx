@@ -129,7 +129,8 @@ export default class AdrenalineRush extends Analyzer {
           <div>
             You used <SpellLink spell={TALENTS.ADRENALINE_RUSH_TALENT} /> at{' '}
             <strong>{comboPointsAtCast}</strong> combo points. Try to use it at{' '}
-            <strong>{MAX_GOOD_ADRENALINE_RUSH_COMBO_POINTS} or less</strong> CP to avoid overcapping.
+            <strong>{MAX_GOOD_ADRENALINE_RUSH_COMBO_POINTS} or less</strong> CP to avoid
+            overcapping.
           </div>
         ),
       },
