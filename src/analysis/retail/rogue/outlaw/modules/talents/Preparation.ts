@@ -4,6 +4,14 @@ import SpellUsable from 'parser/shared/modules/SpellUsable';
 import TALENTS from 'common/TALENTS/rogue';
 import SPELLS from 'common/SPELLS';
 
+export const PREPARATION_COOLDOWN_SPELLS = [
+  SPELLS.BLADE_FLURRY.id,
+  SPELLS.BETWEEN_THE_EYES.id,
+  TALENTS.BLADE_RUSH_TALENT.id,
+  TALENTS.KILLING_SPREE_TALENT.id,
+  TALENTS.ADRENALINE_RUSH_TALENT.id,
+] as const;
+
 class Preparation extends Analyzer {
   static dependencies = {
     spellUsable: SpellUsable,
@@ -17,11 +25,9 @@ class Preparation extends Analyzer {
     this.active = this.selectedCombatant.hasTalent(TALENTS.PREPARATION_TALENT);
 
     this.addEventListener(Events.cast.spell(SPELLS.PREPARATION), (event) => {
-      this.spellUsable.endCooldown(SPELLS.BLADE_FLURRY.id, event.timestamp);
-      this.spellUsable.endCooldown(SPELLS.BETWEEN_THE_EYES.id, event.timestamp);
-      this.spellUsable.endCooldown(TALENTS.BLADE_RUSH_TALENT.id, event.timestamp);
-      this.spellUsable.endCooldown(TALENTS.KILLING_SPREE_TALENT.id, event.timestamp);
-      this.spellUsable.endCooldown(TALENTS.ADRENALINE_RUSH_TALENT.id, event.timestamp);
+      PREPARATION_COOLDOWN_SPELLS.forEach((spellId) => {
+        this.spellUsable.endCooldown(spellId, event.timestamp);
+      });
     });
   }
 }
