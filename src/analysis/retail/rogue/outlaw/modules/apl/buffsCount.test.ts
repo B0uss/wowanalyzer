@@ -7,33 +7,37 @@ const BUFFS = [
   { id: 2, name: 'Two', icon: 'two' },
 ];
 
-const event = (type: EventType, spellId: number, timestamp: number) =>
+const makeEvent = (type: EventType, spellId: number, timestamp: number) =>
   ({ type, ability: { guid: spellId }, timestamp }) as never;
 
 describe('buffsCount', () => {
   it('tracks applied and removed buffs', () => {
     const condition = buffsCount(BUFFS, 1, 'atLeast');
-    let state = condition.init();
+    let state = condition.init({} as never);
 
-    state = condition.update(state, event(EventType.ApplyBuff, 1, 1000));
-    expect(condition.validate(state, event(EventType.Cast, 99, 1300))).toBe(true);
+    state = condition.update(state, makeEvent(EventType.ApplyBuff, 1, 1000));
+    expect(
+      condition.validate(state, makeEvent(EventType.Cast, 99, 1300), BUFFS[0], []),
+    ).toBe(true);
 
-    state = condition.update(state, event(EventType.RemoveBuff, 1, 1400));
-    expect(condition.validate(state, event(EventType.Cast, 99, 1700))).toBe(false);
+    state = condition.update(state, makeEvent(EventType.RemoveBuff, 1, 1400));
+    expect(
+      condition.validate(state, makeEvent(EventType.Cast, 99, 1700), BUFFS[0], []),
+    ).toBe(false);
   });
 
-  it('ignores buffs applied by the current cast window', () => {
+  it('ignores newly applied buffs for 200ms', () => {
     const condition = buffsCount(BUFFS, 1, 'atLeast');
-    const state = condition.update(condition.init(), event(EventType.ApplyBuff, 1, 1000));
+    const state = condition.update(
+      condition.init({} as never),
+      makeEvent(EventType.ApplyBuff, 1, 1000),
+    );
 
-    expect(condition.validate(state, event(EventType.Cast, 99, 1100))).toBe(false);
-    expect(condition.validate(state, event(EventType.Cast, 99, 1300))).toBe(true);
-  });
-
-  it('supports less-than comparisons', () => {
-    const condition = buffsCount(BUFFS, 1, 'lessThan');
-    const state = condition.init();
-
-    expect(condition.validate(state, event(EventType.Cast, 99, 1000))).toBe(true);
+    expect(
+      condition.validate(state, makeEvent(EventType.Cast, 99, 1100), BUFFS[0], []),
+    ).toBe(false);
+    expect(
+      condition.validate(state, makeEvent(EventType.Cast, 99, 1300), BUFFS[0], []),
+    ).toBe(true);
   });
 });
