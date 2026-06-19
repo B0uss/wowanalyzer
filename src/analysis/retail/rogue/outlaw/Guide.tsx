@@ -120,9 +120,9 @@ function ActionPriorityList({ modules, info }: GuideProps<typeof CombatLogParser
   return (
     <Section title="Action Priority List">
       <p>
-        Outlaw has a fast paced rotation that is constantly reacting to buffs and procs. The spec
-        doesn't burst but makes up for it in consistent output. Should be thought as a chaining
-        priority list:
+        Outlaw has a fast-paced rotation that constantly reacts to buffs and procs. The spec does
+        not rely on a single burst window, but makes up for it with consistent output. Treat the
+        rotation as a chained priority list:
         <ol>
           <li>Cooldowns, according to the priorities below.</li>
           <li>Finishers, according to the priorities below.</li>
@@ -130,27 +130,13 @@ function ActionPriorityList({ modules, info }: GuideProps<typeof CombatLogParser
         </ol>
       </p>
       <p>
-        This Action Priority List (APL) is a simplified version off the simc APL that can be found{' '}
+        This Action Priority List (APL) is a simplified version of the simc APL that can be found{' '}
         <a href="https://github.com/simulationcraft/simc/blob/thewarwithin/engine/class_modules/apl/rogue/outlaw.simc">
           here
         </a>
         .
       </p>
       <AplSectionData checker={AplCheck.check} apl={AplCheck.apl(info)} />
-      <hr />
-      <p>
-        <strong>Disclaimer:</strong> (Currently unsupported spells/talents)
-        <ul>
-          <li>
-            {' '}
-            <SpellLink spell={TALENTS.THISTLE_TEA_TALENT} />
-          </li>
-          <li>
-            {' '}
-            <SpellLink spell={SPELLS.BLADE_FLURRY} />
-          </li>
-        </ul>
-      </p>
       <p>You can use the accuracy here as a reference point to compare to other logs.</p>
     </Section>
   );
