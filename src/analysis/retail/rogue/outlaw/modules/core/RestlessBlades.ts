@@ -9,8 +9,7 @@ import TALENTS from 'common/TALENTS/rogue';
  * Restless Blades
  * Finishing moves reduce the remaining cooldown of the abilities listed below by 1 sec per combo point spent.
  */
-const AFFECTED_ABILITIES: number[] = [
-  SPELLS.VANISH.id,
+export const RESTLESS_BLADES_AFFECTED_ABILITIES: number[] = [
   SPELLS.SPRINT.id,
   SPELLS.BLADE_FLURRY.id,
   SPELLS.ROLL_THE_BONES.id,
@@ -101,7 +100,9 @@ class RestlessBlades extends Analyzer {
       return;
     }
 
-    AFFECTED_ABILITIES.forEach((spellId) => this.reduceCooldown(spellId, amountMs));
+    RESTLESS_BLADES_AFFECTED_ABILITIES.forEach((spellId) =>
+      this.reduceCooldown(spellId, amountMs),
+    );
   }
 
   private reduceCooldown(spellId: number, amountMs: number) {
