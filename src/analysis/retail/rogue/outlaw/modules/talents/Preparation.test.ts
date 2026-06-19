@@ -15,6 +15,8 @@ describe('Preparation cooldown spell list', () => {
   });
 
   it('does not contain duplicate spell ids', () => {
-    expect(new Set(PREPARATION_COOLDOWN_SPELLS).size).toBe(PREPARATION_COOLDOWN_SPELLS.length);
+    expect(new Set(PREPARATION_COOLDOWN_SPELLS).size).toBe(
+      PREPARATION_COOLDOWN_SPELLS.length,
+    );
   });
 });
