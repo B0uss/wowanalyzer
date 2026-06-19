@@ -9,8 +9,7 @@ import TALENTS from 'common/TALENTS/rogue';
  * Restless Blades
  * Finishing moves reduce the remaining cooldown of the abilities listed below by 1 sec per combo point spent.
  */
-const AFFECTED_ABILITIES: number[] = [
-  SPELLS.VANISH.id,
+export const RESTLESS_BLADES_AFFECTED_ABILITIES: number[] = [
   SPELLS.SPRINT.id,
   SPELLS.BLADE_FLURRY.id,
   SPELLS.ROLL_THE_BONES.id,
@@ -75,7 +74,7 @@ class RestlessBlades extends Analyzer {
       return;
     }
 
-    let spent = (event.resourceChange += this.useSuperChargedComboPoint());
+    let spent = event.resourceChange + this.useSuperChargedComboPoint();
     if (event.ability.guid === SPELLS.COUP_DE_GRACE_CAST.id) {
       spent += COUP_DE_GRACE_EXTRA_COMBO_POINT_WORTH;
     }
@@ -83,22 +82,32 @@ class RestlessBlades extends Analyzer {
     const hasRollTheBonesCDR = this.selectedCombatant.hasBuff(SPELLS.TRIPLE_THREAT.id);
     const hasDragonboneDice = this.selectedCombatant.hasTalent(TALENTS.DRAGON_BONE_DICE_TALENT);
 
-    let cdrAmount = RESTLESS_BLADES_BASE_CDR * spent;
+    let cooldownReductionMs = RESTLESS_BLADES_BASE_CDR * spent;
 
     if (hasRollTheBonesCDR) {
-      hasDragonboneDice
-        ? (cdrAmount = cdrAmount * (TRIPLE_THREAT_CDR + DRAGONBONE_DICE_MOD))
-        : (cdrAmount = cdrAmount * TRIPLE_THREAT_CDR);
+      cooldownReductionMs *= hasDragonboneDice
+        ? TRIPLE_THREAT_CDR + DRAGONBONE_DICE_MOD
+        : TRIPLE_THREAT_CDR;
     }
 
-    AFFECTED_ABILITIES.forEach((spell) => this.reduceCooldown(spell, cdrAmount));
+    this.reduceAffectedCooldowns(cooldownReductionMs);
 
-    return cdrAmount;
+    return cooldownReductionMs;
   }
 
-  private reduceCooldown(spellId: number, amount: number) {
+  public reduceAffectedCooldowns(amountMs: number) {
+    if (amountMs <= 0) {
+      return;
+    }
+
+    RESTLESS_BLADES_AFFECTED_ABILITIES.forEach((spellId) =>
+      this.reduceCooldown(spellId, amountMs),
+    );
+  }
+
+  private reduceCooldown(spellId: number, amountMs: number) {
     if (this.spellUsable.isOnCooldown(spellId)) {
-      this.spellUsable.reduceCooldown(spellId, amount);
+      this.spellUsable.reduceCooldown(spellId, amountMs);
     }
   }
 }
