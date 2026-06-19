@@ -38,10 +38,7 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["types/**/*", "src/**/*"],
-  "exclude": [
-    "src/analysis/retail/druid/restoration",
-    "src/analysis/retail/paladin/protection"
-  ],
+  "exclude": ["src/analysis/retail/druid/restoration", "src/analysis/retail/paladin/protection"],
   "files": [
     "src/analysis/retail/druid/restoration/CONFIG.tsx",
     "src/analysis/retail/monk/mistweaver/CONFIG.tsx",
