@@ -2,7 +2,6 @@ import SPELLS from 'common/SPELLS';
 import TALENTS from 'common/TALENTS/rogue';
 import {
   and,
-  buffMissing,
   buffPresent,
   or,
   buffStacks,
@@ -11,27 +10,23 @@ import {
 } from 'parser/shared/metrics/apl/conditions';
 import { build, Rule } from 'parser/shared/metrics/apl';
 import { builderComboPointAmount, finisherComboPointAmount } from './comboPointAmount';
+import { buffsCount } from './buffsCount';
+import { ROLL_THE_BONES_BUFFS } from '../../constants';
 
 const hasLowCPFinisherCondition = () => {
   return and(buffPresent(SPELLS.SUBTERFUGE_BUFF), finisherComboPointAmount(5));
 };
 
-const rtbKirCondition = () => {
-  return or(
-    buffPresent(SPELLS.DOUBLE_TROUBLE) ||
-      buffPresent(SPELLS.TRIPLE_THREAT) ||
-      buffPresent(SPELLS.JACKPOT),
+const rtbKirCondition = () =>
+  or(
+    buffsCount(ROLL_THE_BONES_BUFFS, 1, 'lessThan'),
     always(lastSpellCast(TALENTS.KEEP_IT_ROLLING_TALENT)),
   );
-};
 
 const COOLDOWNS: Rule[] = [
   {
     spell: TALENTS.KEEP_IT_ROLLING_TALENT,
-    condition:
-      buffPresent(SPELLS.DOUBLE_TROUBLE) ||
-      buffPresent(SPELLS.TRIPLE_THREAT) ||
-      buffPresent(SPELLS.JACKPOT),
+    condition: buffsCount(ROLL_THE_BONES_BUFFS, 3, 'atLeast'),
   },
   {
     spell: SPELLS.ROLL_THE_BONES,
