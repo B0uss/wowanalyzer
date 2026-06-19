@@ -25,6 +25,7 @@ import Finishers from './modules/features/Finishers';
 import RollTheBonesCastTracker from './modules/features/RollTheBonesCastTracker';
 import BetweenTheEyes from './modules/spells/BetweenTheEyes';
 import BetweenTheEyesDamageTracker from './modules/spells/BetweenTheEyesDamageTracker';
+import BladeFlurryUptime from './modules/spells/BladeFlurryUptime';
 import Dispatch from './modules/spells/Dispatch';
 import Opportunity from './modules/spells/Opportunity';
 import OpportunityDamageTracker from './modules/spells/OpportunityDamageTracker';
@@ -89,6 +90,7 @@ class CombatLogParser extends CoreCombatLogParser {
     audacity: Audacity,
     betweenTheEyesDamageTracker: BetweenTheEyesDamageTracker,
     betweenTheEyes: BetweenTheEyes,
+    bladeFlurryUptime: BladeFlurryUptime,
     rollTheBonesBuffs: RollTheBonesBuffs,
     rollTheBonesCounter: RollTheBonesCounter,
     rollTheBonesEfficiency: RollTheBonesEfficiency,
